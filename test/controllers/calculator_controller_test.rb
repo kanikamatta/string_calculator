@@ -8,4 +8,10 @@ class CalculatorControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal 0, JSON.parse(@response.body)["result"]
   end
+
+  test "should handle new lines between numbers" do
+    post calculator_add_path, params: { numbers: "1\n2,3" }, as: :json
+    assert_response :success
+    assert_equal 6, JSON.parse(@response.body)["result"]
+  end
 end

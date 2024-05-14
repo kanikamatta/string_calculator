@@ -3,7 +3,7 @@
 class CalculatorController < ApplicationController
   def add
     numbers = params[:numbers] || ""
-    numbers_array = numbers.split(",").map(&:to_i)
+    numbers_array = numbers.split(/,|\n/).map(&:to_i)
     result = numbers_array.sum
     render json: { result: result }
   end
