@@ -14,4 +14,10 @@ class CalculatorControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal 6, JSON.parse(@response.body)["result"]
   end
+
+  test "should support changing delimiters" do
+    post calculator_add_path, params: { numbers: "//;\n1;2;3", delimiter: ";" }, as: :json
+    assert_response :success
+    assert_equal 6, JSON.parse(@response.body)["result"]
+  end
 end
