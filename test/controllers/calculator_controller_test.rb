@@ -20,4 +20,10 @@ class CalculatorControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal 6, JSON.parse(@response.body)["result"]
   end
+
+  test "should throw an error for negative numbers" do
+    post calculator_add_path, params: { numbers: "-1,2,-3" }, as: :json
+    assert_response :unprocessable_entity
+    assert_equal "Negative numbers not allowed: -1, -3", JSON.parse(@response.body)["error"]
+  end
 end
